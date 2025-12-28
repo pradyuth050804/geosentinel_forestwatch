@@ -42,4 +42,5 @@ EXPOSE 5000
 # Run the application
 # We use standard flask run or gunicorn if available
 # For now, using python to run api.py which invokes app.run()
-CMD ["python3", "backend/api.py"]
+# Switch to simplified API to save memory (Render Free Tier Limit: 512MB)
+CMD ["python3", "backend/api_simple.py"]

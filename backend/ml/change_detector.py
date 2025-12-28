@@ -10,7 +10,7 @@ from typing import Tuple, Dict
 import json
 from scipy import ndimage
 
-from backend.ml.deforestation_model import DeforestationModel, create_simple_change_detector
+from backend.ml.simple_detector import create_simple_change_detector
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +37,7 @@ class ChangeDetector:
             self.detector = create_simple_change_detector()
             self.model = None
         else:
+            from backend.ml.deforestation_model import DeforestationModel
             logger.info("Using TensorFlow model")
             self.model = DeforestationModel(model_path=model_path)
             self.detector = None

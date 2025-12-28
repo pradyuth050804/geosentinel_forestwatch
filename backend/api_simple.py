@@ -33,6 +33,17 @@ except:
 # Load config
 from backend.config import *
 
+# Try to import Gemini, but don't fail if not available
+try:
+    from backend.services.gemini_service import GeminiExplainer
+    GEMINI_AVAILABLE = True
+except:
+    GEMINI_AVAILABLE = False
+    logging.warning("Gemini service not available")
+
+# Load config
+from backend.config import *
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -43,7 +54,9 @@ logger = logging.getLogger(__name__)
 # Initialize Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = FLASK_SECRET_KEY
-CORS(app)
+app.config['SECRET_KEY'] = FLASK_SECRET_KEY
+# Allow CORS for all domains on all /api routes
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Job storage
 jobs = {}
@@ -255,6 +268,34 @@ def analyze():
     except Exception as e:
         logger.error(f"Error starting analysis: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/available-dates', methods=['GET'])
+def get_available_dates():
+    """Get available Sentinel-2 dates (Mocked for Simple Version)"""
+    try:
+        quarter = request.args.get('quarter')
+        if not quarter:
+            return jsonify({'success': False, 'error': 'Quarter parameter required'}), 400
+        
+        # Mock dates for demo purposes
+        # In simple mode, we just return a fixed set of "good" dates
+        dates = [
+            {'date': '2022-05-06', 'cloud_cover': 5.2, 'cached': True},
+            {'date': '2023-01-15', 'cloud_cover': 12.1, 'cached': False},
+            {'date': '2024-11-26', 'cloud_cover': 2.5, 'cached': True}
+        ]
+        
+        return jsonify({
+            'success': True,
+            'quarter': quarter,
+            'dates': dates,
+            'total': len(dates)
+        })
+        
+    except Exception as e:
+        logger.error(f"Error fetching dates: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/api/status/<job_id>', methods=['GET'])
