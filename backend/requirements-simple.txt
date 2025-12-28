@@ -1,0 +1,34 @@
+# Simplified requirements for Windows (without GDAL/rasterio)
+# Core Dependencies
+flask==3.0.0
+flask-cors==4.0.0
+python-dotenv==1.0.0
+
+# Image Processing (no GDAL required)
+Pillow==10.1.0
+opencv-python==4.8.1.78
+scikit-image==0.22.0
+
+# Machine Learning
+tensorflow==2.15.0
+numpy==1.24.3
+scikit-learn==1.3.2
+scipy==1.11.4
+
+# Google Gemini API
+google-generativeai==0.3.2
+
+# Utilities
+tqdm==4.66.1
+
+# Optional: For full geospatial functionality, install these separately:
+# rasterio==1.3.9  # Requires GDAL
+# geopandas==0.14.1  # Requires GDAL
+# shapely==2.0.2
+# pyproj==3.6.1
+# fiona==1.9.5
+# sentinelsat==1.2.1
+
+# Note: On Windows, install GDAL from:
+# https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
+# Then install rasterio, geopandas, etc.

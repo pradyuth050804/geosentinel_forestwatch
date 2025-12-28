@@ -1,0 +1,27 @@
+# Minimal requirements - works with pip only (no conda needed)
+
+# Core web framework
+flask==3.0.0
+flask-cors==4.0.0
+python-dotenv==1.0.0
+
+# Image processing
+Pillow>=10.0.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+scipy>=1.11.0
+scikit-image>=0.22.0
+
+# Machine Learning (optional - for TensorFlow model)
+# tensorflow>=2.13.0  # Uncomment if you want ML features
+
+# Google Gemini API (optional - for AI explanations)
+google-generativeai>=0.3.0
+
+# Note: This simplified version works WITHOUT:
+# - rasterio (requires GDAL)
+# - geopandas (requires GDAL)
+# - shapely (requires GEOS)
+# - sentinelsat
+
+# The system will use mock data and simplified processing
