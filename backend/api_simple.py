@@ -33,27 +33,16 @@ except:
 # Load config
 from backend.config import *
 
-# Try to import Gemini, but don't fail if not available
-try:
-    from backend.services.gemini_service import GeminiExplainer
-    GEMINI_AVAILABLE = True
-except:
-    GEMINI_AVAILABLE = False
-    logging.warning("Gemini service not available")
-
-# Load config
-from backend.config import *
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    force=True  # Ensure our configuration takes precedence
 )
 logger = logging.getLogger(__name__)
 
 # Initialize Flask app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = FLASK_SECRET_KEY
 app.config['SECRET_KEY'] = FLASK_SECRET_KEY
 # Allow CORS for all domains on all /api routes
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -380,6 +369,7 @@ def index():
 
 
 if __name__ == '__main__':
+    print("--- STARTING SIMPLE API ---", flush=True)
     logger.info("Starting GeoSentinel Forest Watch API (Simplified Version)...")
     logger.info(f"KML file: {KML_FILE}")
     logger.info(f"Output directory: {OUTPUT_DIR}")
@@ -388,5 +378,5 @@ if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         port=FLASK_PORT,
-        debug=(FLASK_ENV == 'development')
+        debug=False # Disable debug to save memory (no reloader)
     )

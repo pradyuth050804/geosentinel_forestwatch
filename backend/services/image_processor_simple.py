@@ -4,7 +4,7 @@ Uses PIL and OpenCV for image processing
 """
 import numpy as np
 from PIL import Image
-import cv2
+# import cv2  <-- Removed to save memory (unused)
 from pathlib import Path
 import logging
 from typing import Tuple
