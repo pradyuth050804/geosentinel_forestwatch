@@ -34,7 +34,8 @@ logger = logging.getLogger(__name__)
 # Initialize Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = FLASK_SECRET_KEY
-CORS(app)
+# Allow CORS for all domains on all /api routes
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Job storage (in-memory for simplicity)
 jobs = {}
@@ -599,6 +600,13 @@ if __name__ == '__main__':
             logger.warning(f"  - {error}")
         logger.warning("Some features may not work correctly")
     
+    # Debug: Print loaded environment variables (Masked)
+    logger.info("--- Environment Check ---")
+    logger.info(f"COPERNICUS_USERNAME set: {bool(COPERNICUS_USERNAME)}")
+    logger.info(f"GEMINI_API_KEY set: {bool(GEMINI_API_KEY)}")
+    logger.info(f"SENTINEL_HUB_CLIENT_ID set: {bool(SENTINEL_HUB_CLIENT_ID)}")
+    logger.info(f"Starting host: 0.0.0.0 on port: {FLASK_PORT}")
+
     app.run(
         host='0.0.0.0',
         port=FLASK_PORT,
